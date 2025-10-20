@@ -1,0 +1,91 @@
+Langraph, Lang Chain and Lang Smith are the trio of products by Lang Chain
+
+
+The Lang Chain Ecosystem
+
+LangChain
+LangChain is a developer framework for building LLM-powered applications that composes modular pieces like prompts, chains, agents, and memory.
+It provides connectors to LLM providers, vector stores, and data sources, plus utilities for prompt templates, caching, and retrieval-augmented generation (RAG).
+Use it to assemble reusable pipelines (chains) or agent workflows without reimplementing core plumbing for embeddings, retrieval, and orchestration.
+It's language-agnostic (Python/JS) and popular for prototyping and production LLM apps.
+
+There's definitely a love/hate kind of relationship with LangChain
+I appreciate it's power and the way that very little code indeed, you
+can get up and running with lot of functionality like building a RAG pipeline
+in like 4 lines of code.
+
+Drawbacks:
+Similar to the opiniated aspects of crew, by signing up for lot of the
+abstractions and lot of the glue that comes in the box, you're signing up
+for their way of doing things, and you have less visibility of what's going
+on with their prompts.
+
+Memory is just the json blob of the conversations that you have with the LLMs,
+so you can handle that json yourself.
+
+So for some projects, there's less need to sign up for a big ecosystem, say
+persisting memory.
+
+LangGraph
+LangGraph is their core offering.
+LangGraph is actually indepedent of LangChain, while working with LangGraph,
+you can use LangChain code to call LLMS. You can use any framework for calling LLMs.
+LangGraph is all about a platform that focuses on stability, resiliency, and
+repeatability. It's an abstraction layer that allows you to organize your thinking
+around a workflow of different activities that could have feedback loop. It allows you to have
+all this in a repeatable, easily monitoring, stable and a scalable way.
+
+LangGraph offers
+-- LangGraph
+-- LangGraph Studio
+-- LangGraph Platform
+
+LangSmith
+LangSmith is their monitoring tooling. It gives you visibility to your calls,
+and your reasoning to quickly debug failures.
+
+Terminology:
+Agent workflows are represented as graphs.
+
+State represents the current snapshot of the application.
+
+Nodes are python functions that represent agent logic,
+they receive the current state as an input, do something,
+and return an updated State.
+
+Edges are python functions that determine which Node to execute based on the State. They
+can be conditional or fixed.
+
+Nodes do the work.
+Edges choose what to do next.
+
+The Five Steps to the first Graph.
+1. Define the State Class - The state is immutable.
+2. Start the Graph Builder
+3. Create a Node.
+4. Create Edges.
+5. Compile the Graph.
+
+When you run a graph application, there's two phases.
+- It runs some of your code that lays out the graph that defines what it is that you're trying to achieve.
+= You initiate it and then your graph runs.
+
+Day 3
+Going Deeper
+1. Langsmith.
+2, Tools - out of the box.
+3. Tools - custom.
+4. Checkpointing.
+
+Terminology
+- The Super-Step - Can be considered a single iteration over the graph nodes.
+One full super-step: one interaction between agents and tools to achieve an outcome.
+Every user interaction is a fresh 'graph.invoke(state)'
+
+How it all fits together
+
+Define Graph -> Super-step(Each invocation has it's own Super-step for each of the call)
+
+
+Day 4
+Asyncronous LangGraph

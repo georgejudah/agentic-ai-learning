@@ -107,11 +107,15 @@ class Sidekick:
             return "evaluator"
 
     def format_conversation(self, messages: List[Any]) -> str:
-        conversation = "Conversation history:\n\n"
+        """Format a list of LangChain messages into a readable conversation string for the evaluator."""
+        conversation = "Conversation history:\n\n"  # Start with a header
         for message in messages:
             if isinstance(message, HumanMessage):
+                # Add user messages with "User:" prefix
                 conversation += f"User: {message.content}\n"
             elif isinstance(message, AIMessage):
+                # Add assistant messages with "Assistant:" prefix
+                # Use "[Tools use]" if message has no content (indicates tool usage)
                 text = message.content or "[Tools use]"
                 conversation += f"Assistant: {text}\n"
         return conversation
@@ -193,30 +197,56 @@ class Sidekick:
         self.graph = graph_builder.compile(checkpointer=self.memory)
 
     async def run_superstep(self, message, success_criteria, history):
+        """Run a complete conversation superstep through the LangGraph workflow.
+
+        This method orchestrates the entire multi-agent workflow:
+        1. Worker agent processes the request and may use tools
+        2. Evaluator agent assesses if success criteria are met
+        3. Workflow may loop back to worker if more work is needed
+        4. Returns the final response and evaluation feedback
+        """
+        # Configure the graph execution with this sidekick's unique thread ID for conversation continuity
         config = {"configurable": {"thread_id": self.sidekick_id}}
 
+        # Initialize the state with user's input and success criteria
         state = {
-            "messages": message,
-            "success_criteria": success_criteria or "The answer should be clear and accurate",
-            "feedback_on_work": None,
-            "success_criteria_met": False,
-            "user_input_needed": False,
+            "messages": message,  # The user's message
+            "success_criteria": success_criteria or "The answer should be clear and accurate",  # Success criteria (with fallback)
+            "feedback_on_work": None,  # No previous feedback for first run
+            "success_criteria_met": False,  # Not yet evaluated
+            "user_input_needed": False,  # Don't need user input initially
         }
+
+        # Execute the entire LangGraph workflow (may involve multiple agent interactions)
         result = await self.graph.ainvoke(state, config=config)
+
+        # Extract the final assistant response (second-to-last message, before evaluator feedback)
         user = {"role": "user", "content": message}
         reply = {"role": "assistant", "content": result["messages"][-2].content}
         feedback = {"role": "assistant", "content": result["messages"][-1].content}
+
+        # Return updated conversation history with user input, assistant reply, and evaluator feedback
         return history + [user, reply, feedback]
 
     def cleanup(self):
+        """Clean up browser and Playwright resources to prevent memory leaks and resource exhaustion.
+
+        This method safely closes the browser and stops Playwright, handling both scenarios:
+        - When called from within an existing async event loop (e.g., from Gradio UI)
+        - When called from a synchronous context (e.g., application shutdown)
+        """
         if self.browser:
             try:
+                # Try to get the currently running event loop (e.g., when called from Gradio)
                 loop = asyncio.get_running_loop()
+                # Schedule browser closure as a task in the existing loop
                 loop.create_task(self.browser.close())
                 if self.playwright:
+                    # Also schedule Playwright shutdown
                     loop.create_task(self.playwright.stop())
             except RuntimeError:
-                # If no loop is running, do a direct run
+                # No event loop is currently running, so we need to create one
+                # This happens during application shutdown or cleanup
                 asyncio.run(self.browser.close())
                 if self.playwright:
                     asyncio.run(self.playwright.stop())

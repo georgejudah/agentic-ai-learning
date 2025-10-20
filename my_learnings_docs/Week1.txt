@@ -1,0 +1,15 @@
+Agentic AI frameworks
+
+Top to down approach, wrt learning curve and complexity and abstractions
+
+Langraph Autogen
+
+OpenAI SDK Agents Crew AI
+
+No framework MCP
+
+
+# Tools
+"Tools" give LLM the autonomy
+
+- the power to query your database or message other LLMs

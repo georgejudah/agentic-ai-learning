@@ -1,0 +1,33 @@
+Going deeper with crew ai
+- using structured output
+- using custom tool
+- hierarichal process
+
+
+CrewAI flow steps:
+- crewai create crew <project_name>
+- Fill in the config yaml files to define the Agents and the Tasks
+- Complete the crew.py module to create the Agents, Tasks and Crew, referencing the config
+- Update main.py to set any inputs
+- Run with crewai run.
+
+
+Crew framework comes with memory out of the box
+Pros
+- up and running quickly
+
+Cons
+- Steep learning curve
+- Obscures what happens behind the query.
+
+Types of memory it has
+- Short term memory
+Stores recent interactes using RAG, enabling agents to access
+the relevant information.
+- Long term memory
+Stored in SQL database
+- Entity memory
+Information about people, places and concepts encountered during tasks
+for deeper understanding and relationship mapping. Uses RAG.
+- Contextual memory
+Maintains the context of interactions by combining all of the above.

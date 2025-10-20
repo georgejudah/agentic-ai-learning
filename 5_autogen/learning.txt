@@ -1,0 +1,95 @@
+# AutoGen Architecture Overview
+
+## Overview
+AutoGen is a collection of different components wrapped under the AutoGen umbrella, providing tools for building multi-agent AI systems.
+
+## Architectural Diagram
+
+```
+AutoGen Ecosystem
+
++-------------------+     +-------------------+
+|   AutoGen Core    |     | AutoGen AgentChat |
+| - Event-driven    |     | - Conversations   |
+| - Scalable        |     | - Single/Multi    |
++-------------------+     +-------------------+
+          |                       |
+          +-----------+-----------+
+                      |
+          +-----------------------+
+          |       Studio          |
+          | - Low-code/No-code    |
+          +-----------------------+
+                      |
+          +-----------------------+
+          |   Magnetic One CLI    |
+          | - Console Assistant   |
+          +-----------------------+
+```
+
+## Core Components
+
+### AutoGen Core
+- **Purpose**: Event-driven framework for scalable multi-agent AI systems.
+- **Key Features**: Handles events, scalability, and multi-agent orchestration.
+
+### AutoGen AgentChat
+- **Purpose**: Conversation-based single and multi-agent applications.
+- **Description**: Abstract construct for interaction in agent-based systems.
+
+### Studio
+- **Purpose**: Low-code/No-code application builder.
+- **Description**: Enables building AI applications without deep coding.
+
+### Magnetic One CLI
+- **Purpose**: Console-based Assistant.
+- **Description**: Command-line interface for AI interactions.
+
+## Core Concepts
+
+Models
+
+Messages
+
+Agents
+
+Team - Similar to "Crew" from Crew
+
+
+
+Day 2
+Going Deeper
+- Multi-modal
+- Structured Outputs
+- Connecting to Tools from LangChain - This is super cool
+- Teams
+
+MCP - is just an agreed protocol/ agreed way that we can plug model into tools. AutoGen gives a good wrapper for MCP tools similar to LangChain.
+It's a massive public ecosystem. It's like any other function call. It's standardized for AI tools such that it can be used in any of the framework.
+Anyone can create an MCP server and your agents can instantly use them.
+Tools build for one framework can be used in others without rewriting.
+
+
+Day 3
+What is AutoGen Core ?
+
+# AutoGen Core is the foundational event-driven framework within the AutoGen ecosystem, designed for building scalable multi-agent AI systems.
+# It provides the core infrastructure for:
+# - Event-driven architecture: Agents communicate through events rather than direct calls
+# - Scalability: Handles large numbers of agents and complex interactions efficiently
+# - Orchestration: Manages the lifecycle and coordination of multiple agents
+# - Extensibility: Allows building custom agent types and interaction patterns
+# Unlike AgentChat (which focuses on conversational agents), Core is more low-level and flexible for advanced use cases.
+
+# Comparison to LangGraph:
+# Similarities: Both are frameworks for building complex, multi-agent/actor AI systems with structured workflows.
+# Differences:
+# - Architecture: AutoGen Core uses event-driven messaging; LangGraph uses graph-based state machines (nodes/edges)
+# - Focus: AutoGen emphasizes agent autonomy and conversation; LangGraph focuses on deterministic state transitions
+# - Flexibility: AutoGen Core is more extensible for custom agent behaviors; LangGraph excels at predictable, graph-defined flows
+# - Use Cases: AutoGen better for dynamic agent interactions; LangGraph better for structured, repeatable processes
+
+
+Two types of Runtime
+- Standalone
+- Distributed
