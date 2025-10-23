@@ -1,0 +1,12 @@
+Make a creator agent that can create a Python module
+
+The Python module is an agent
+
+Have the Creator Agent actually register it's creation
+with Distributed Runtime
+
+Have it make creations that can message each other
+by their names using AutoGen Agent Communication
+
+Make them collaborate to come up with commercial
+business ideas for Agents.
