@@ -35,3 +35,15 @@ the fetch MCP Server on your computer.
 
 Two "Transport" mechanisms
 Stdio or SSE(Uses HTTPS connections with streaming - mandatory while connecting to remote machines especially)
+
+
+Making an MCP Server
+
+Why make an MCP Server
+- Allow others to incorporate tools and resources
+- Consistently incorporate all our MCP Servers
+- Understand the plumbing
+
+Reasons not to make an MCP Server
+If it's only for us, then we could just make tools
+using the @function_tool decorator can make any function into a tool.
