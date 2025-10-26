@@ -1,0 +1,37 @@
+MCP
+
+MCP is not
+- A framework for building agents
+- A fundamental change to how agents work
+- A way to code agents
+
+
+What it is
+A protocol - a standard
+A simple way to integrate tools, resources, prompts(sharing tools with each other)
+A USB-C port for AI applications
+
+
+Reasons not to be excited
+MCP, it's just a standard, it's not tools themselves
+LangChain already has a big Tools ecosystem
+You can already make any function into Tool.
+
+Reason to be excited
+Makes it frictionless to integrate other people's tools
+It's taking off! Exploing ecosystem
+HTML was a standard, too
+
+The Three Components
+- Host in an LLM app like Claude or our Agent architecture.
+- MCP client lives inside Host and connects 1:1 to MCP Server.
+- MCP Server provides tools, context and promptss.
+
+Example:
+Fetch is an MCP Server that searches the web via a headless browser.
+
+You can configure Claude Desktop(the host) to run an MCP Client that then launches
+the fetch MCP Server on your computer.
+
+Two "Transport" mechanisms
+Stdio or SSE(Uses HTTPS connections with streaming - mandatory while connecting to remote machines especially)
