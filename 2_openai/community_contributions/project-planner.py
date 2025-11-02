@@ -21,7 +21,6 @@ from openai import AsyncOpenAI
 
 # Initialize email service API key
 resend.api_key = os.getenv("RESEND_API_KEY")
-print(resend.api_key)
 
 # Configure custom OpenAI client for DeepSeek model
 custom_client = AsyncOpenAI(
